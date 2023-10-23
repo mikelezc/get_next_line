@@ -6,7 +6,7 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:38:58 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/23 16:59:00 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:15:46 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	ft_newlinelength(t_list *list) //  cuenta la cantidadd de carácteres de la 
 	return (length);
 }
 
-void	dealloc(t_list **list, t_list *clean_node, char *buf)
+void	ft_unalloc(t_list **list, t_list *clean_node, char *buf)
 {
 	t_list	*tmp;
 

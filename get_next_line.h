@@ -6,7 +6,7 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:38:25 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/23 16:57:49 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:13:35 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ char	*ft_obtain_line(t_list *list);
 int		ft_newlinelength(t_list *list);
 void	ft_copystr(t_list *list, char *str);
 void	ft_cleanlist(t_list **list);
-void	dealloc(t_list **list, t_list *clean_node, char *buf);
+void	ft_unalloc(t_list **list, t_list *clean_node, char *buf);
 
 #endif

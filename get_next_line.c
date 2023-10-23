@@ -6,7 +6,7 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:24 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/23 16:53:17 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:15:19 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_cleanlist(t_list **list) //función usada para limpiar los carácteres n
 	buf[j] = '\0';
 	clean->buffer = buf;
 	clean->next = NULL;
-	dealloc(list, clean, buf);
+	ft_unalloc(list, clean, buf);
 }
 
 char	*ft_obtain_line(t_list *list)
