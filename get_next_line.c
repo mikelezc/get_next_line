@@ -6,7 +6,7 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:24 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/23 17:15:19 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:21:01 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ void	ft_nodetext(t_list **list, int fd) //genera cachos de texto leidos del fd y
 	{
 		buffer = malloc(BUFFER_SIZE + 1); // donde vamos a almacenar el string
 		if (NULL == buffer) // control de malloc
-			return;
+			return ;
 		char_count = read(fd, buffer, BUFFER_SIZE); //read nos va a devolver la cantidad de caracteres leidos
 		if (!char_count) //control que nos dice que si la cantidad carácteres es cero, es que el archivo ha llegado a su fin o está vacío, por eso libera el buffer y nos retorna la función
 		{
 			free(buffer);
-			return;
+			return ;
 		}
 		buffer[char_count] = '\0'; // coloca el carácter nulo al final de la línea almacenada en el buffer
 		ft_attach(list, buffer);
@@ -102,13 +102,11 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next, 0) < 0) 
 		return (NULL);
 	ft_nodetext(&list, fd); //función para crear un nodo de texto leido de un fd
-
 	if (list == NULL)
 		return (NULL);
 	next = ft_obtain_line(list);
 	ft_cleanlist(&list);
 	return (next);
-
 }
 
 /*
