@@ -6,7 +6,7 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:38:58 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/23 17:23:23 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:39:55 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	ft_linedetector(t_list *list)
 		list = list->next;
 	}
 	return (0);
-
 }
 
 t_list	*ft_lastnode(t_list *list)
@@ -47,7 +46,7 @@ void	ft_copystr(t_list *list, char *str)
 	int	i;
 	int	j;
 
-	if (NULL == list) //otra vez controlamos el NULL
+	if (NULL == list)
 		return ;
 	j = 0;
 	while (list)
@@ -55,20 +54,20 @@ void	ft_copystr(t_list *list, char *str)
 		i = 0;
 		while (list->buffer[i])
 		{
-			if (list->buffer[i] == '\n') // con esto controlamos si la cadena que estamos copiando ha llegado ya a salto de línea (es decir nueva línea)
+			if (list->buffer[i] == '\n')
 			{
-				str[j++] = '\n'; //en caso de ser así ponemos salto de línea en el siguiente lugar de la cadena copiada..
-				str[j] = '\0'; //...ponemos carácter  nulo al final de la cadena..
-				return ; // y retornamos.
+				str[j++] = '\n';
+				str[j] = '\0';
+				return ;
 			}
-			str[j++] = list->buffer[i++]; //si no, simplemente copiamos la cadena
+			str[j++] = list->buffer[i++];
 		}
-		list = list->next; //con esto avanzamos al siguiente nodo después de haber copiado la cadena, hasta que entremos en el "while (list->buffer[i])"
+		list = list->next;
 	}
-	str[j] = '\0'; //y si no hemos retornado antes, agregamos carácter nulo al final de lo copiado para poder operar con el resto de funciones
+	str[j] = '\0';
 }
 
-int	ft_newlinelength(t_list *list) //  cuenta la cantidadd de carácteres de la linea que vamos a leer
+int	ft_newlinelength(t_list *list)
 {
 	int	i;
 	int	length;
@@ -81,7 +80,7 @@ int	ft_newlinelength(t_list *list) //  cuenta la cantidadd de carácteres de la 
 		i = 0;
 		while (list->buffer[i])
 		{
-			if (list->buffer[i] == '\n') // '\n' sirve para comprobar si se trata de una nueva linea (recordamos que este carácter es igual a presionar enter para generar una nueva línea)
+			if (list->buffer[i] == '\n')
 			{
 				++length;
 				return (length);
