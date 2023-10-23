@@ -6,7 +6,7 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:38:25 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/23 13:00:17 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/23 14:25:33 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <fcntl.h>
 
 typedef struct s_list
 {
@@ -29,5 +30,8 @@ typedef struct s_list
 
 
 char	*get_next_line(int fd);
+int		ft_linedetector(t_list *list);
+void	ft_attach(t_list **list, char *buf);
+void	ft_nodetext(t_list **list, int fd);
 
 #endif
