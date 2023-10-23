@@ -6,16 +6,68 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:24 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/23 14:26:07 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:53:17 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	ft_attach(t_list **list, char *buf)
+void	ft_cleanlist(t_list **list) //función usada para limpiar los carácteres no usados de la última copia de buffer después del salto de línea
 {
-	
+	t_list	*last;
+	t_list	*clean;
+	int		i;
+	int		j;
+	char	*buf;
 
+	buf = malloc(BUFFER_SIZE + 1);
+	clean = malloc(sizeof(t_list));
+	if (NULL == buf || NULL == clean)
+		return ;
+	last = ft_lastnode(*list);
+	i = 0;
+	j = 0;
+	while (last->buffer[i] && last->buffer[i] != '\n') //mientras "last->buffer[i]" no sea igual a cero, o haya un salto de línea.
+		++i;
+	while (last->buffer[i] && last->buffer[++i])
+		buf[j++] = last->buffer[i];
+	buf[j] = '\0';
+	clean->buffer = buf;
+	clean->next = NULL;
+	dealloc(list, clean, buf);
+}
+
+char	*ft_obtain_line(t_list *list)
+{
+	int		length;
+	char	*next;
+
+	if (NULL == list) //controlamos que la lista no de vacía, es redundante pero por seguridad es mejor controlar cada función por separado.
+		return (NULL);
+	length = ft_newlinelength(list);
+	next = malloc(length + 1);
+	if (NULL == next)
+		return (NULL);
+	ft_copystr(list, next);
+	return (next);
+
+}
+
+void	ft_attach(t_list **list, char *buf) // función para unir cachos de texto
+{
+	t_list	*new;
+	t_list	*previous;
+
+	previous = ft_lastnode(*list);
+	new = malloc(sizeof(t_list));
+	if (NULL == new) // control de malloc
+		return ;
+	if (NULL == previous) //si no hay nada almacenado de antes (por ejemplo porque es la primera vez que leemos)
+		*list = new;
+	else
+		previous->next = new;
+	new->buffer = buf;
+	new->next = NULL;
 }
 
 void	ft_nodetext(t_list **list, int fd) //genera cachos de texto leidos del fd y los almacena en structs
@@ -50,6 +102,12 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next, 0) < 0) 
 		return (NULL);
 	ft_nodetext(&list, fd); //función para crear un nodo de texto leido de un fd
+
+	if (list == NULL)
+		return (NULL);
+	next = ft_obtain_line(list);
+	ft_cleanlist(&list);
+	return (next);
 
 }
 
