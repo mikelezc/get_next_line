@@ -6,7 +6,7 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:24 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/23 17:45:30 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:10:42 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ void	ft_nodetext(t_list **list, int fd)
 			free(buffer);
 			return ;
 		}
+		/*if (char_count == -1)
+		{
+			free(buffer);
+			return ;
+		}*/
 		buffer[char_count] = '\0';
 		ft_attach(list, buffer);
 	}
@@ -104,7 +109,20 @@ char	*get_next_line(int fd)
 	ft_cleanlist(&list);
 	return (next);
 }
+/*
+int	main(void)
+{
+	int		fd;                             
+	char	*line;                         
+	int		lines;                          
 
+	lines = 1;                              
+	fd = open("test.txt", O_RDONLY);       
+
+	while ((line = get_next_line(fd)))      
+		printf("%d->%s\n", lines++, line);
+}
+*/
 /*
 Explicación rápida de la función write:
    
