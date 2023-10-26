@@ -6,7 +6,7 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:24 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/25 12:10:42 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:50:41 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ void	ft_cleanlist(t_list **list)
 	buf = malloc(BUFFER_SIZE + 1);
 	clean = malloc(sizeof(t_list));
 	if (NULL == buf || NULL == clean)
+	{
+		free(buf);
+		free(clean);
 		return ;
+	}	
 	last = ft_lastnode(*list);
 	i = 0;
 	j = 0;
@@ -85,11 +89,12 @@ void	ft_nodetext(t_list **list, int fd)
 			free(buffer);
 			return ;
 		}
-		/*if (char_count == -1)
+		if (char_count == -1)
 		{
-			free(buffer);
+			free((*list)->buffer);
+			free(*list);
 			return ;
-		}*/
+		}
 		buffer[char_count] = '\0';
 		ft_attach(list, buffer);
 	}
@@ -101,7 +106,14 @@ char	*get_next_line(int fd)
 	char			*next;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next, 0) < 0)
+	{
+		if (list)
+		{
+			ft_cleanlist(&list);
+			list = NULL;
+		}
 		return (NULL);
+	}
 	ft_nodetext(&list, fd);
 	if (list == NULL)
 		return (NULL);
@@ -121,6 +133,8 @@ int	main(void)
 
 	while ((line = get_next_line(fd)))      
 		printf("%d->%s\n", lines++, line);
+	close(fd);
+	return (0);
 }
 */
 /*
