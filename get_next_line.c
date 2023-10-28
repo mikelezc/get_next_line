@@ -6,7 +6,7 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:24 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/28 19:34:15 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/28 19:38:21 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,14 +117,3 @@ int	main(void)
 	close(fd);
 	return (0);
 }*/
-
-/*
-
-Explicación rápida de la función write:
-   
-   ssize_t read(int fd, void *buf, size_t nbytes);
-
-   - fd: descriptor de fichero de entrada, 
-   - buf: puntero a un buffer de memoria y 
-   - nbytes: número de bytes del buffer que queramos leer.
-*/
