@@ -6,37 +6,26 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:38:25 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/26 14:33:01 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/28 16:59:51 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
+# include <unistd.h>
+# include <stdlib.h>
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
 # endif
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-
-typedef struct s_list
-{
-	char			*buffer;
-	struct s_list	*next;
-}	t_list;
-
+char	*gnl_strchr(const char *word, char chr);
+char	*ft_strjoin(char *s1, char *s2);
+size_t	ft_strlen(char const *word);
 char	*get_next_line(int fd);
-int		ft_linedetector(t_list *list);
-void	ft_attach(t_list **list, char *buf);
-void	ft_nodetext(t_list **list, int fd);
-t_list	*ft_lastnode(t_list *list);
-char	*ft_obtain_line(t_list *list);
-int		ft_newlinelength(t_list *list);
-void	ft_copystr(t_list *list, char *str);
-void	ft_cleanlist(t_list **list);
-void	ft_unalloc(t_list **list, t_list *clean_node, char *buf);
+char	*ft_fillcontainer(int fd, char *container);
+char	*ft_refillcontainer(char *container);
+char	*ft_get_line(char *container);
 
 #endif

@@ -6,120 +6,102 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:24 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/26 14:50:41 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/28 16:58:51 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>	
 #include "get_next_line.h"
 
-void	ft_cleanlist(t_list **list)
+char	*ft_fillcontainer(int fd, char *container)
 {
-	t_list	*last;
-	t_list	*clean;
-	int		i;
-	int		j;
-	char	*buf;
-
-	buf = malloc(BUFFER_SIZE + 1);
-	clean = malloc(sizeof(t_list));
-	if (NULL == buf || NULL == clean)
-	{
-		free(buf);
-		free(clean);
-		return ;
-	}	
-	last = ft_lastnode(*list);
-	i = 0;
-	j = 0;
-	while (last->buffer[i] && last->buffer[i] != '\n')
-		++i;
-	while (last->buffer[i] && last->buffer[++i])
-		buf[j++] = last->buffer[i];
-	buf[j] = '\0';
-	clean->buffer = buf;
-	clean->next = NULL;
-	ft_unalloc(list, clean, buf);
-}
-
-char	*ft_obtain_line(t_list *list)
-{
-	int		length;
-	char	*next;
-
-	if (NULL == list)
-		return (NULL);
-	length = ft_newlinelength(list);
-	next = malloc(length + 1);
-	if (NULL == next)
-		return (NULL);
-	ft_copystr(list, next);
-	return (next);
-}
-
-void	ft_attach(t_list **list, char *buf)
-{
-	t_list	*new;
-	t_list	*previous;
-
-	previous = ft_lastnode(*list);
-	new = malloc(sizeof(t_list));
-	if (NULL == new)
-		return ;
-	if (NULL == previous)
-		*list = new;
-	else
-		previous->next = new;
-	new->buffer = buf;
-	new->next = NULL;
-}
-
-void	ft_nodetext(t_list **list, int fd)
-{
-	int		char_count;
 	char	*buffer;
+	int		size;
 
-	while (!ft_linedetector(*list))
+	size = 1;
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (NULL);
+	while (!gnl_strchr(container, '\n') && size > 0)
 	{
-		buffer = malloc(BUFFER_SIZE + 1);
-		if (NULL == buffer)
-			return ;
-		char_count = read(fd, buffer, BUFFER_SIZE);
-		if (!char_count)
+		size = read(fd, buffer, BUFFER_SIZE);
+		if (size == -1)
 		{
+			free(container);
 			free(buffer);
-			return ;
+			return (NULL);
 		}
-		if (char_count == -1)
-		{
-			free((*list)->buffer);
-			free(*list);
-			return ;
-		}
-		buffer[char_count] = '\0';
-		ft_attach(list, buffer);
+		buffer[size] = '\0';
+		container = ft_strjoin(container, buffer);
 	}
+	free(buffer);
+	return (container);
+}
+
+char	*ft_get_line(char *container)
+{
+	char	*str;
+	int		index;
+
+	index = 0;
+	if (!container[index])
+		return (NULL);
+	while (container[index] && container[index] != '\n')
+		index++;
+	str = malloc(sizeof(char) * (index + 2));
+	index = 0;
+	while (container[index] && container[index] != '\n')
+	{
+		str[index] = container[index];
+		index++;
+	}
+	if (container[index] == '\n')
+		str[index++] = '\n';
+	str[index] = '\0';
+	return (str);
+}
+
+char	*ft_refillcontainer(char *container)
+{
+	int		index;
+	int		y;
+	char	*str;
+
+	index = 0;
+	while (container[index] && container[index] != '\n')
+		index++;
+	if (!container[index])
+	{
+		free(container);
+		return (NULL);
+	}
+	str = malloc(sizeof(char) * (ft_strlen(container) - index + 1));
+	if (!str)
+		return (NULL);
+	index++;
+	y = 0;
+	while (container[index])
+	{
+		str[y++] = container[index++];
+	}
+	str[y] = '\0';
+	free(container);
+	return (str);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_list	*list = NULL;
-	char			*next;
+	static char	*container;
+	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next, 0) < 0)
-	{
-		if (list)
-		{
-			ft_cleanlist(&list);
-			list = NULL;
-		}
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	}
-	ft_nodetext(&list, fd);
-	if (list == NULL)
+	container = ft_fillcontainer(fd, container);
+	if (!container)
 		return (NULL);
-	next = ft_obtain_line(list);
-	ft_cleanlist(&list);
-	return (next);
+	line = ft_get_line(container);
+	container = ft_refillcontainer(container);
+	return (line);
 }
 /*
 int	main(void)

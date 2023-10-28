@@ -6,112 +6,70 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:38:58 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/23 17:39:55 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/28 16:59:27 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_linedetector(t_list *list)
+char	*gnl_strchr(const char *word, char chr)
 {
-	int	i;
+	char	*res;
+	int		i;
 
-	if (NULL == list)
+	i = 0;
+	if (!word)
 		return (0);
-	while (list)
+	while (word[i] != '\0')
 	{
-		i = 0;
-		while (list->buffer[i] && i < BUFFER_SIZE)
+		if (word[i] == chr)
 		{
-			if (list->buffer[i] == '\n')
-				return (1);
-			++i;
+			res = (char *)&word[i];
+			return (res);
 		}
-		list = list->next;
+		i++;
 	}
-	return (0);
-}
-
-t_list	*ft_lastnode(t_list *list)
-{
-	if (NULL == list)
+	if (chr != '\0')
 		return (NULL);
-	while (list->next)
-		list = list->next;
-	return (list);
+	res = (char *)&word[i];
+	return (res);
 }
 
-void	ft_copystr(t_list *list, char *str)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	int	i;
-	int	j;
+	char	*str;
+	size_t	i;
+	size_t	j;
 
-	if (NULL == list)
-		return ;
+	if (!s1)
+	{
+		s1 = malloc(sizeof(char));
+		s1[0] = '\0';
+	}
+	if (!s2)
+		return (NULL);
+	str = malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2)) + 1));
+	if (!str)
+		return (NULL);
+	i = -1;
 	j = 0;
-	while (list)
-	{
-		i = 0;
-		while (list->buffer[i])
-		{
-			if (list->buffer[i] == '\n')
-			{
-				str[j++] = '\n';
-				str[j] = '\0';
-				return ;
-			}
-			str[j++] = list->buffer[i++];
-		}
-		list = list->next;
-	}
-	str[j] = '\0';
+	while (s1[++i])
+		str[i] = s1[i];
+	while (s2[j])
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	free(s1);
+	return (str);
 }
 
-int	ft_newlinelength(t_list *list)
+size_t	ft_strlen(char const *word)
 {
-	int	i;
-	int	length;
+	size_t		i;
 
-	if (NULL == list)
-		return (0);
-	length = 0;
-	while (list)
+	i = 0;
+	while (word[i] != '\0')
 	{
-		i = 0;
-		while (list->buffer[i])
-		{
-			if (list->buffer[i] == '\n')
-			{
-				++length;
-				return (length);
-			}
-			++i;
-			++length;
-		}
-		list = list->next;
+		i++;
 	}
-	return (length);
-}
-
-void	ft_unalloc(t_list **list, t_list *clean_node, char *buf)
-{
-	t_list	*tmp;
-
-	if (NULL == *list)
-		return ;
-	while (*list)
-	{
-		tmp = (*list)->next;
-		free((*list)->buffer);
-		free(*list);
-		*list = tmp;
-	}
-	*list = NULL;
-	if (clean_node->buffer[0])
-		*list = clean_node;
-	else
-	{
-		free(buf);
-		free(clean_node);
-	}
+	return (i);
 }
