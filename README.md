@@ -12,3 +12,8 @@ Miércoles 25 octubre 2023
   -Subo main y texto de prueba
   -reestudio todo el código
   -Falta controlar el error de paco 
+
+Sábado 28 de octubre 2023
+
+  -Replanteo algunas funciones
+  -Errores controlados por fin, sin bonus aún.  
