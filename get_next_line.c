@@ -6,14 +6,13 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:24 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/28 16:58:51 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/28 19:34:15 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>	
 #include "get_next_line.h"
 
-char	*ft_fillcontainer(int fd, char *container)
+char	*gnl_traincontainer(int fd, char *container)
 {
 	char	*buffer;
 	int		size;
@@ -32,13 +31,13 @@ char	*ft_fillcontainer(int fd, char *container)
 			return (NULL);
 		}
 		buffer[size] = '\0';
-		container = ft_strjoin(container, buffer);
+		container = gnl_strjoin(container, buffer);
 	}
 	free(buffer);
 	return (container);
 }
 
-char	*ft_get_line(char *container)
+char	*gnl_polish(char *container)
 {
 	char	*str;
 	int		index;
@@ -61,7 +60,7 @@ char	*ft_get_line(char *container)
 	return (str);
 }
 
-char	*ft_refillcontainer(char *container)
+char	*gnl_surplus(char *container)
 {
 	int		index;
 	int		y;
@@ -96,11 +95,11 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	container = ft_fillcontainer(fd, container);
+	container = gnl_traincontainer(fd, container);
 	if (!container)
 		return (NULL);
-	line = ft_get_line(container);
-	container = ft_refillcontainer(container);
+	line = gnl_polish(container);
+	container = gnl_surplus(container);
 	return (line);
 }
 /*
@@ -117,9 +116,10 @@ int	main(void)
 		printf("%d->%s\n", lines++, line);
 	close(fd);
 	return (0);
-}
-*/
+}*/
+
 /*
+
 Explicación rápida de la función write:
    
    ssize_t read(int fd, void *buf, size_t nbytes);

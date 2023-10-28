@@ -6,7 +6,7 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:38:58 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/28 16:59:27 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/28 19:33:31 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*gnl_strchr(const char *word, char chr)
 	return (res);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*gnl_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	size_t	i;
