@@ -16,4 +16,5 @@ Miércoles 25 octubre 2023
 Sábado 28 de octubre 2023
 
   -Replanteo algunas funciones
-  -Errores controlados por fin, sin bonus aún.  
+  -Errores controlados por fin.
+  -Bonus añadido pero aún errores con los test de paco. 
