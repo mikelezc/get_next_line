@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:24 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/28 19:47:18 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/28 20:45:36 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*gnl_traincontainer(int fd, char *container)
 {
@@ -90,16 +90,16 @@ char	*gnl_surplus(char *container)
 
 char	*get_next_line(int fd)
 {
-	static char	*container;
+	static char	*container[OPEN_MAX];
 	char		*line;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd > OPEN_MAX)
 		return (NULL);
-	container = gnl_traincontainer(fd, container);
-	if (!container)
+	container[fd] = gnl_traincontainer(fd, container[fd]);
+	if (!container[fd])
 		return (NULL);
-	line = gnl_polish(container);
-	container = gnl_surplus(container);
+	line = gnl_polish(container[fd]);
+	container[fd] = gnl_surplus(container[fd]);
 	return (line);
 }
 /*

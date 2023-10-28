@@ -18,3 +18,4 @@ Sábado 28 de octubre 2023
   -Replanteo algunas funciones
   -Errores controlados por fin.
   -Bonus añadido pero aún errores con los test de paco. 
+  -Bonus funcionando! pasa paco
