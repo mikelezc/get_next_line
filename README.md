@@ -19,3 +19,8 @@ Sábado 28 de octubre 2023
   -Errores controlados por fin.
   -Bonus añadido pero aún errores con los test de paco. 
   -Bonus funcionando! pasa paco
+
+Domingo 29 de octubre 2023
+
+  -Día de pruebas con diferentes test y mains.
+  -Testeo a fondo el funcionamiento del bonus. 

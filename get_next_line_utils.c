@@ -6,32 +6,32 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:38:58 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/28 19:33:31 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/29 19:41:25 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*gnl_strchr(const char *word, char chr)
+char	*gnl_strchr(const char *str, char chr)
 {
 	char	*res;
 	int		i;
 
 	i = 0;
-	if (!word)
+	if (!str)
 		return (0);
-	while (word[i] != '\0')
+	while (str[i] != '\0')
 	{
-		if (word[i] == chr)
+		if (str[i] == chr)
 		{
-			res = (char *)&word[i];
+			res = (char *)&str[i];
 			return (res);
 		}
 		i++;
 	}
 	if (chr != '\0')
 		return (NULL);
-	res = (char *)&word[i];
+	res = (char *)&str[i];
 	return (res);
 }
 

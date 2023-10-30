@@ -6,7 +6,7 @@
 /*   By: mlezcano <mlezcano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:24 by mlezcano          #+#    #+#             */
-/*   Updated: 2023/10/28 20:45:36 by mlezcano         ###   ########.fr       */
+/*   Updated: 2023/10/29 20:18:48 by mlezcano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,20 @@ char	*gnl_polish(char *container)
 	i = 0;
 	if (!container[i])
 		return (NULL);
-	while (container[i] && container[i] != '\n')
+	while (container[i] != '\0' && container[i] != '\n')
 		i++;
 	str = malloc(sizeof(char) * (i + 2));
 	i = 0;
-	while (container[i] && container[i] != '\n')
+	while (container[i] != '\0' && container[i] != '\n')
 	{
 		str[i] = container[i];
 		i++;
 	}
 	if (container[i] == '\n')
-		str[i++] = '\n';
+	{
+		str[i] = '\n';
+		i++;
+	}
 	str[i] = '\0';
 	return (str);
 }
@@ -67,9 +70,9 @@ char	*gnl_surplus(char *container)
 	char	*str;
 
 	i = 0;
-	while (container[i] && container[i] != '\n')
+	while (container[i] != '\0' && container[i] != '\n')
 		i++;
-	if (!container[i])
+	if (container[i] == '\0')
 	{
 		free(container);
 		return (NULL);
@@ -79,10 +82,8 @@ char	*gnl_surplus(char *container)
 		return (NULL);
 	i++;
 	j = 0;
-	while (container[i])
-	{
+	while (container[i] != '\0')
 		str[j++] = container[i++];
-	}
 	str[j] = '\0';
 	free(container);
 	return (str);
@@ -105,15 +106,31 @@ char	*get_next_line(int fd)
 /*
 int	main(void)
 {
-	int		fd;                             
-	char	*line;                         
-	int		lines;                          
+	int		fd1;
+	int		fd2;
+	int		fd3;
+	char	*line;
+	int		lines;
 
-	lines = 1;                              
-	fd = open("test.txt", O_RDONLY);       
-
-	while ((line = get_next_line(fd)))      
-		printf("%d->%s\n", lines++, line);
-	close(fd);
+	lines = 1;
+	fd1 = open("test/test.txt", O_RDONLY);
+	fd2 = open("test/test2.txt", O_RDONLY);
+	fd3 = open("test/test3.txt", O_RDONLY);
+	while (lines <= 5)
+	{
+		line = get_next_line(fd1);
+		printf("%d->%s\n", lines, line);
+		free(line);
+		line = get_next_line(fd2);
+		printf("%d->%s\n", lines, line);
+		free(line);
+		line = get_next_line(fd3);
+		printf("%d->%s\n", lines, line);
+		free(line);
+		lines++;
+	}
+	close(fd1);
+	close(fd2);
+	close(fd3);
 	return (0);
 }*/
